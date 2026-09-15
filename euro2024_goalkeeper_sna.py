@@ -927,11 +927,11 @@ CLUSTER_FEATURES = [
 ]
 
 FEATURE_LABELS_EN = {
-    "team_pass_share": "GK share of team passes",
+    "team_pass_share": "GK share of team completed passes",
     "betweenness_mean": "Betweenness centrality",
     "receiver_diversity_mean": "Mean receiver diversity",
-    "normalized_entropy": "Distribution entropy",
-    "long_pass_share": "Long-pass share",
+    "normalized_entropy": "Normalized entropy",
+    "long_pass_share": "GK long-pass attempt share",
 }
 
 
@@ -1005,8 +1005,8 @@ def make_cluster_names(
             cluster for cluster in remaining if cluster != active_cluster
         )
         return {
-            active_cluster: "Higher-involvement profile",
-            limited_cluster: "Lower-involvement profile",
+            active_cluster: "Relatively higher-involvement configuration",
+            limited_cluster: "Relatively lower-involvement configuration",
         }
 
     if remaining:
@@ -1472,7 +1472,7 @@ def save_pca_plot(
     else:
         ax.set_xlabel("PC1")
         ax.set_ylabel("PC2")
-    ax.legend(title="Profile", loc="best")
+    ax.legend(title="Exploratory configuration", loc="best")
     ax.grid(alpha=0.2)
     fig.tight_layout()
 
@@ -1564,7 +1564,7 @@ def save_involvement_longpass_plot(eligible: pd.DataFrame) -> Path:
     )
     ax.set_xlabel("Goalkeeper share of completed team passes (%)")
     ax.set_ylabel("Goalkeeper long-pass attempt share (%)")
-    ax.legend(title="Profile", loc="best")
+    ax.legend(title="Exploratory configuration", loc="best")
     ax.grid(alpha=0.2)
     fig.tight_layout()
 
@@ -2072,7 +2072,7 @@ Important:
 - Network edge direction = passer -> recipient.
 - Network edge weight = completed-pass count.
 - Betweenness uses inverse edge weight (1 / pass count) as distance.
-- Long-pass share uses all goalkeeper pass attempts in the selected build-up sample.
+- GK long-pass attempt share uses all goalkeeper pass attempts in the selected build-up sample.
 - Clusters are interpreted as goalkeeper-team build-up system profiles, not isolated goalkeeper traits.
 - Cluster count is assessed with silhouette, Calinski-Harabasz and Davies-Bouldin indices.
 - Robustness checks include Ward, Gaussian mixture, cluster-bootstrap Jaccard,
